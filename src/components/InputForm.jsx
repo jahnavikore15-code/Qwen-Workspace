@@ -1,107 +1,139 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 
 const InputForm = ({ onSubmit }) => {
-  const [name, setName] = useState('');
-  const [role, setRole] = useState('');
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
   const [photo, setPhoto] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
+
   const fileInputRef = useRef(null);
 
   const handleDragOver = (e) => {
     e.preventDefault();
-    e.stopPropagation();
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+
+    if (e.dataTransfer.files.length > 0) {
       handleFile(e.dataTransfer.files[0]);
     }
   };
 
   const handleFile = (file) => {
-    if (file && file.type.startsWith('image/')) {
-      setPhoto(file);
-      setPhotoPreview(URL.createObjectURL(file));
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please upload an image file.");
+      return;
     }
+
+    setPhoto(file);
+    setPhotoPreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !photo) return;
-    onSubmit({ name, role, photo });
+
+    if (!name.trim()) {
+      alert("Please enter your name.");
+      return;
+    }
+
+    if (!photo) {
+      alert("Please upload a photo.");
+      return;
+    }
+
+    onSubmit({
+      name: name.trim(),
+      role: role.trim(),
+      photo,
+    });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
         <label>Upload Your Photo</label>
-        <div 
+
+        <div
           className="drop-zone"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => fileInputRef.current.click()}
         >
           {photoPreview ? (
-            <img src={photoPreview} alt="Preview" className="preview-photo" />
+            <img
+              src={photoPreview}
+              alt="Preview"
+              className="preview-photo"
+            />
           ) : (
-            <div>
+            <div style={{ textAlign: "center" }}>
               <img
                 src="/images/qwen-camera-bear.jpeg"
-                alt=""
+                alt="Qwen Camera Bear"
                 className="drop-zone-bear"
-                aria-hidden="true"
               />
-              ✨
-Drag & drop your photo here
 
-<p style={{ fontSize: "0.8rem", marginTop: "0.25rem", opacity: 0.7 }}>
-Click or drag an image to create your personalized Qwen Workspace attendee pass.
-</p>
+              <p>✨ Drag & Drop your photo here</p>
+
+              <p
+                style={{
+                  fontSize: "0.85rem",
+                  opacity: 0.7,
+                }}
+              >
+                Click or drag an image to generate your
+                <strong> Qwen Workspace Attendee Pass</strong>.
+              </p>
             </div>
           )}
-          <input 
-            type="file" 
-            ref={fileInputRef} 
-            onChange={(e) => handleFile(e.target.files[0])} 
+
+          <input
+            ref={fileInputRef}
+            type="file"
             accept="image/*"
-            style={{ display: 'none' }}
+            hidden
+            onChange={(e) => handleFile(e.target.files[0])}
           />
         </div>
       </div>
 
       <div className="form-group">
         <label>Name</label>
-        <input 
-          type="text" 
-          value={name} 
+
+        <input
           className="form-input"
-          onChange={(e) => setName(e.target.value)} 
+          type="text"
           placeholder="Enter your full name"
+          value={name}
           maxLength={40}
-          required 
+          onChange={(e) => setName(e.target.value)}
+          required
         />
       </div>
 
       <div className="form-group">
         <label>Company / Designation (Optional)</label>
-        <input 
-          type="text" 
-          value={role} 
+
+        <input
           className="form-input"
-          onChange={(e) => setRole(e.target.value)} 
-          placeholder="e.g. Product Designer at Qwen"
+          type="text"
+          placeholder="e.g. Software Engineer at Qwen"
+          value={role}
           maxLength={40}
+          onChange={(e) => setRole(e.target.value)}
         />
       </div>
 
-      <button 
-        type="submit" 
-        className="btn-primary" 
+      <button
+        className="btn-primary"
+        type="submit"
         disabled={!name || !photo}
       >
-       Generate My Attendee Pass
+        Generate My Attendee Pass
       </button>
     </form>
   );
