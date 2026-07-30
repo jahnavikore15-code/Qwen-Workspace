@@ -10,17 +10,24 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const handleGenerateTicket = async (data) => {
-    console.log("Button clicked", data);
+    console.log("Button clicked:", data);
 
     setLoading(true);
 
     try {
       const { name, role, photo } = data;
+
       const url = await generateTicketCanvas(name, role, photo);
+
       setTicketUrl(url);
     } catch (error) {
-      console.error(error);
-      alert("Error generating attendee pass.");
+      console.error("Ticket Generation Error:", error);
+
+      alert(
+        error instanceof Error
+          ? error.message
+          : String(error)
+      );
     } finally {
       setLoading(false);
     }
@@ -37,42 +44,37 @@ function App() {
       <div className="circle circle3"></div>
 
       <div className="hero-section">
-
-        {/* Qwen Logo */}
         <img
           src="/images/qwen-title.jpeg"
           alt="Qwen Workspace"
           style={{
             width: "100px",
             height: "auto",
-            marginBottom: "10px",
             display: "block",
-            marginLeft: "auto",
-            marginRight: "auto",
+            margin: "0 auto 10px",
           }}
         />
 
-        {/* Heading */}
         <h2
           style={{
             fontSize: "24px",
             fontWeight: "700",
+            color: "#fff",
+            textAlign: "center",
             margin: "5px 0",
-            color: "#ffffff",
           }}
         >
           Community
         </h2>
 
-        {/* Description */}
         <p
           style={{
             fontSize: "15px",
             maxWidth: "550px",
             margin: "0 auto 20px",
             textAlign: "center",
-            lineHeight: "1.6",
             color: "#E5E7EB",
+            lineHeight: "1.6",
           }}
         >
           Upload your photo and generate your personalized
@@ -86,7 +88,6 @@ function App() {
           src="/images/qwen-coder-bear.jpeg"
           alt="Qwen Bear"
           className="hero-bear"
-          aria-hidden="true"
         />
 
         {loading ? (
