@@ -17,14 +17,33 @@
   }
 }
 
-.hero {
-  position: relative;
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(135deg,#0B1026,#171F46,#1E3A8A);
+    background-image: url("/images/bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
 
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.45);
+  }
+
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:60px;
+    bottom:40px;
+    width:340px;
+    height:340px;
+    background:url("/images/qwen-coder-bear.jpeg") no-repeat center;
+    background-size:contain;
+    opacity:.18;
   }
 
   .base {
@@ -63,6 +82,7 @@
   place-content: center;
   place-items: center;
   flex-grow: 1;
+  backdrop-filter:blur(12px);
 
   @media (max-width: 1024px) {
     padding: 32px 20px 24px;
