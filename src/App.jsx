@@ -39,8 +39,7 @@ function App() {
       <div className="hero-section">
         <img 
           src="/images/qwen-title.jpeg" 
-          className="logo"/>
-        <h1>Qwen Workspace</h1>
+          className="w-32"/>
         <h2>Community</h2>
         <p>
           Upload your photo and generate your personalized Qwen Workspace attendee pass.
