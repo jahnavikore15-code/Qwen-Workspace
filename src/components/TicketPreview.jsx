@@ -1,7 +1,7 @@
 import React from "react";
 
 const TicketPreview = ({ ticketUrl, onReset }) => {
-  const shareText = `🚀 Excited to attend the @Qwen Workspace Community Watch Party!
+  const shareText = `🚀 Excited to attend the @Qwen Workspace Community!
 
 Looking forward to connecting, learning, collaborating and networking with the amazing Qwen community.
 
@@ -184,7 +184,7 @@ Next Steps:
           <li>🔻 Download your personalized attendee pass.</li>
 <li>↪️ Share it on LinkedIn, Instagram or X.</li>
 <li>🚨 Tag the Qwen community and DevX.</li>
-<li>See you at the Qwen Workspace Watch Party! 🎉</li>
+<li>See you at the Qwen Workspace! 🎉</li>
         </ul>
       </div>
 
