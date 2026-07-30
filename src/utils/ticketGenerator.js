@@ -8,7 +8,7 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      const TEMPLATE_URL = "/images/template.png";
+      const TEMPLATE_URL = "/template.png";
 
       const PHOTO_X = 435;
       const PHOTO_Y = 675;
