@@ -11,7 +11,7 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
     const ctx = canvas.getContext('2d');
     
     // Config Constants (Matching Python Logic)
-    const TEMPLATE_URL = "/qwen-template.png";
+    const TEMPLATE_URL = "/images/template.png";
     const PHOTO_X = 435;
     const PHOTO_Y = 675;
     const PROFILE_SIZE = 290;
