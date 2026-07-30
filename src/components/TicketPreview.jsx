@@ -1,94 +1,72 @@
 import React from "react";
 
 const TicketPreview = ({ ticketUrl, onReset }) => {
-  const shareText = `🚀 Excited to attend the @Qwen Workspace Community!
+  const shareText = `🚀 Excited to attend the Qwen Workspace Community!
 
 Looking forward to connecting, learning, collaborating and networking with the amazing Qwen community.
 
 #QwenWorkspace
-#Hyderabad
-#Trending
+#AI
 #Qwen
-#AICommunity
+#Community
+#Hyderabad
 #DevX`;
 
-  const handleDownload = async () => {
-  try {
-    const response = await fetch(ticketUrl);
-    const blob = await response.blob();
-
-    const url = window.URL.createObjectURL(blob);
-
+  const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = url;
+    link.href = ticketUrl;
     link.download = "Qwen_Workspace_Attendee_Pass.png";
-
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    window.URL.revokeObjectURL(url);
-  } catch (err) {
-    console.error(err);
-    alert("Unable to download the attendee pass.");
-  }
-};
+  };
 
   const handleLinkedInShare = async () => {
-  // Download attendee pass
-  handleDownload();
+    try {
+      handleDownload();
 
-  // Copy caption
-  await navigator.clipboard.writeText(shareText);
+      await navigator.clipboard.writeText(shareText);
 
-  // Open LinkedIn
-  setTimeout(() => {
-    window.open("https://www.linkedin.com/feed/", "_blank");
+      setTimeout(() => {
+        window.open("https://www.linkedin.com/feed/", "_blank");
 
-    alert(
-`✅ Attendee pass downloaded!
+        alert(`✅ Attendee pass downloaded!
 
-✅ Caption copied to clipboard!
+✅ Caption copied!
 
-Next Steps:
-1. LinkedIn has been opened.
-2. Create a new post.
-3. Upload the downloaded attendee pass.
-4. Paste the copied caption (Ctrl + V).
-5. Add any @mentions if needed and post.`
-    );
-  }, 700);
-};
+Open LinkedIn and create a new post.
+Upload the attendee pass and paste the copied caption.`);
+      }, 500);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleInstagramShare = async () => {
-  // Download attendee pass
-  handleDownload();
+    try {
+      handleDownload();
 
-  // Copy caption
-  await navigator.clipboard.writeText(shareText);
+      await navigator.clipboard.writeText(shareText);
 
-  // Open Instagram
-  setTimeout(() => {
-    window.open("https://www.instagram.com/", "_blank");
+      setTimeout(() => {
+        window.open("https://www.instagram.com/", "_blank");
 
-    alert(
-`✅ Attendee pass downloaded!
+        alert(`✅ Attendee pass downloaded!
 
-✅ Caption copied to clipboard!
+✅ Caption copied!
 
-Next Steps:
-1. Instagram has been opened.
-2. Upload the downloaded attendee pass.
-3. Paste the copied caption.
-4. Share your post.`
-    );
-  }, 700);
-};
+Open Instagram and upload your attendee pass.`);
+      }, 500);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleTwitterShare = () => {
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       shareText
     )}`;
+
     window.open(twitterUrl, "_blank");
   };
 
@@ -105,50 +83,38 @@ Next Steps:
         alt="Attendee Pass"
         style={{
           width: "100%",
-          maxWidth: "450px",
-          borderRadius: "16px",
-          marginBottom: "1.5rem",
+          maxWidth: "420px",
+          borderRadius: "18px",
+          boxShadow: "0 10px 30px rgba(0,0,0,.3)",
+          marginBottom: "25px",
         }}
       />
 
       <div className="action-buttons">
         <button
-          onClick={handleDownload}
           className="btn-secondary"
-          style={{ flex: "1 1 100%", marginBottom: "0.5rem" }}
+          onClick={handleDownload}
         >
-          Download Attendee Pass
+          Download Pass
         </button>
 
         <button
+          className="btn-primary"
           onClick={handleLinkedInShare}
-          className="btn-primary"
-          style={{ flex: 1, minWidth: "150px" }}
         >
-          Share on LinkedIn
+          LinkedIn
         </button>
 
         <button
+          className="btn-primary"
           onClick={handleInstagramShare}
-          className="btn-primary"
-          style={{
-            flex: 1,
-            minWidth: "150px",
-            background:
-              "linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4)",
-          }}
         >
-          Share on Instagram
+          Instagram
         </button>
 
         <button
-          onClick={handleTwitterShare}
           className="btn-primary"
-          style={{
-            flex: 1,
-            minWidth: "150px",
-            background:"linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4)",
-          }}
+          onClick={handleTwitterShare}
         >
           Share on X
         </button>
@@ -156,46 +122,34 @@ Next Steps:
 
       <div
         style={{
-          marginTop: "2rem",
-          padding: "1.5rem",
-          background: "rgba(255,255,255,0.08)",
-          borderRadius: "12px",
-          border: "1px solid rgba(255,255,255,0.1)",
-          textAlign: "left",
+          marginTop: "30px",
           width: "100%",
           maxWidth: "500px",
+          padding: "20px",
+          borderRadius: "14px",
+          background: "rgba(255,255,255,.08)",
         }}
       >
-        <h3
-          style={{
-            marginTop: 0,
-            color: "#8e7dff",
-          }}
-        >
+        <h3 style={{ color: "#7c5cff" }}>
           What's Next?
         </h3>
 
-        <ul
-          style={{
-            paddingLeft: "20px",
-            lineHeight: "1.8",
-          }}
-        >
-          <li>🔻 Download your personalized attendee pass.</li>
-<li>↪️ Share it on LinkedIn, Instagram or X.</li>
-<li>🚨 Tag the Qwen community and DevX.</li>
-<li>See you at the Qwen Workspace! 🎉</li>
+        <ul style={{ lineHeight: "2" }}>
+          <li>Download your attendee pass.</li>
+          <li>Share it on LinkedIn, Instagram or X.</li>
+          <li>Tag the Qwen community.</li>
+          <li>See you at the event! 🎉</li>
         </ul>
       </div>
 
       <button
         onClick={onReset}
-        className="btn-secondary"
         style={{
-          marginTop: "2rem",
-          background: "none",
+          marginTop: "25px",
+          background: "transparent",
           border: "none",
-          opacity: 0.7,
+          color: "#aaa",
+          cursor: "pointer",
         }}
       >
         ← Create Another Pass
