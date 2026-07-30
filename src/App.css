@@ -113,7 +113,8 @@
   margin: 32px 0 0;
 
   .logo {
-    height: 18px;
+    width:140px;
+    height:auto;
   }
 
   a {
