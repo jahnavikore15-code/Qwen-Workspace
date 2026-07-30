@@ -1,0 +1,374 @@
+:root {
+  --primary-color: #6c63ff;
+  --secondary-color: #8e7dff;
+  --accent-yellow: #ffc933;
+  --accent-purple: #6c63ff;
+  --accent-pink: #8e7dff;
+
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #a8a5c4;
+
+  --glass-bg: rgba(255,255,255,0.85);
+  --glass-border: rgba(0,0,0,0.08);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  color: #fff;
+  background: linear-gradient(135deg, #07070a, #14142a, #1a1a3d);
+  background-color: #07070a;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+  z-index: -1;
+}
+
+/* Floating gradient blobs */
+.circle {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.circle1 {
+  width: 420px;
+  height: 420px;
+  top: -100px;
+  left: -100px;
+  background: var(--primary-color);
+}
+
+.circle2 {
+  width: 380px;
+  height: 380px;
+  bottom: -120px;
+  right: -80px;
+  background: var(--accent-yellow);
+}
+
+.circle3 {
+  width: 300px;
+  height: 300px;
+  top: 40%;
+  right: 20%;
+  background: var(--secondary-color);
+}
+
+#root{
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    padding:40px 20px;
+}
+
+/* Glassmorphism Card (Refined) */
+.glass-card{
+    width:100%;
+    max-width:650px;
+    padding:50px;
+    border-radius:28px;
+
+    background:rgba(20,20,20,.65);
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.5),
+        inset 0 0 1px rgba(255,255,255,.2);
+}
+
+/* Glow Effect */
+.glass-card {
+  position: relative;
+}
+
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.25), transparent 40%);
+  border-radius: 22px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Qwen logo in hero */
+.qwen-logo {
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 0.75rem;
+}
+
+/* Decorative coder-bear illustration inside the card */
+.hero-bear {
+  position: absolute;
+  top: -40px;
+  right: -30px;
+  width: 110px;
+  height: auto;
+  opacity: 0.9;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 20px rgba(108, 99, 255, 0.35));
+}
+
+@media (max-width: 640px) {
+  .hero-bear {
+    display: none;
+  }
+}
+
+/* Camera-bear illustration inside the empty drop zone */
+.drop-zone-bear {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 0.75rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+
+.ticket-preview-container {
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input{
+    padding: 18px 20px;
+font-size: 18px;
+}
+
+.form-input {
+  background:white;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.25);
+}
+
+.drop-zone{
+    min-height:260px;
+    border:2px dashed rgba(255,255,255,.18);
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:16px;
+
+    transition:.3s;
+}
+
+.drop-zone:hover {
+  border-color: var(--primary-color);
+  background: rgba(108, 99, 255, 0.08);
+}
+
+.drop-zone p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.preview-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+/* UI Elements */
+.brand-logo {
+  height: 45px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(108, 99, 255, 0.5));
+}
+
+.nav-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  z-index: 10;
+}
+
+.footer-logos {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+/* Primary Button (Gradient Pink/Purple) */
+.btn-primary{
+
+    padding:18px;
+
+    padding:20px;
+font-size:20px;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        90deg,
+        #6c63ff,
+        #8e7dff
+    );
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(108, 99, 255, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.9rem 1.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Ticket Image */
+.ticket-image-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  background: black;
+}
+
+.ticket-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.app-container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:40px 20px;
+}
+
+.hero-section{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.hero-section h1{
+    margin:0;
+    font-size:64px;
+    font-weight:900;
+    letter-spacing:2px;
+    color:white;
+}
+
+.hero-section h2{
+    margin-top:12px;
+    margin-bottom:18px;
+    color:var(--secondary-color);
+    font-size:30px;
+    font-weight:700;
+}
+
+.hero-section p{
+    max-width:650px;
+    margin:auto;
+    color:#cbd5e1;
+    line-height:1.8;
+    font-size:18px;
+}
