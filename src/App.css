@@ -27,25 +27,6 @@
     background-size: cover;
   }
 
-  .hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,.45);
-  }
-
-  .hero::after{
-    content:"";
-    position:absolute;
-    right:60px;
-    bottom:40px;
-    width:340px;
-    height:340px;
-    background:url("/images/qwen-coder-bear.jpeg") no-repeat center;
-    background-size:contain;
-    opacity:.18;
-  }
-
   .base {
     width: 170px;
     position: relative;
