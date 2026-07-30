@@ -104,6 +104,7 @@ if (role) {
         };
         imgUser.src = e.target.result;
       };
+      console.log(photoFile);
       reader.readAsDataURL(photoFile);
     };
     
