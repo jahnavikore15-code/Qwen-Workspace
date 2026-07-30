@@ -37,22 +37,58 @@ function App() {
       <div className="circle circle3"></div>
 
       <div className="hero-section">
-        <img 
-          src="/images/qwen-title.jpeg" 
-          className="w-32"/>
-        <h2>Community</h2>
-        <p>
-          Upload your photo and generate your personalized Qwen Workspace attendee pass.
+
+        {/* Qwen Logo */}
+        <img
+          src="/images/qwen-title.jpeg"
+          alt="Qwen Workspace"
+          style={{
+            width: "100px",
+            height: "auto",
+            marginBottom: "10px",
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        />
+
+        {/* Heading */}
+        <h2
+          style={{
+            fontSize: "24px",
+            fontWeight: "700",
+            margin: "5px 0",
+            color: "#ffffff",
+          }}
+        >
+          Community
+        </h2>
+
+        {/* Description */}
+        <p
+          style={{
+            fontSize: "15px",
+            maxWidth: "550px",
+            margin: "0 auto 20px",
+            textAlign: "center",
+            lineHeight: "1.6",
+            color: "#E5E7EB",
+          }}
+        >
+          Upload your photo and generate your personalized
+          <strong> Qwen Workspace </strong>
+          attendee pass.
         </p>
       </div>
 
       <main className="glass-card">
         <img
           src="/images/qwen-coder-bear.jpeg"
-          alt=""
+          alt="Qwen Bear"
           className="hero-bear"
           aria-hidden="true"
         />
+
         {loading ? (
           <Loader />
         ) : ticketUrl ? (
