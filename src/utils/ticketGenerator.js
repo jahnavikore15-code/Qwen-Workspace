@@ -103,12 +103,17 @@ if (role) {
           resolve(canvas.toDataURL('image/png', 1.0));
         };
         imgUser.src = e.target.result;
+        imgUser.onload = () => {
+    console.log("User image loaded");
       };
       console.log(photoFile);
       reader.readAsDataURL(photoFile);
     };
     
-    imgTemplate.onerror = () => reject("Failed to load template image");
+    imgTemplate.onerror = () => {
+    console.error("Template not found");
+    reject("Template not found");
+    };
     imgTemplate.src = TEMPLATE_URL;
   });
 };
