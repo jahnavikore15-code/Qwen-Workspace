@@ -23,6 +23,8 @@ const InputForm = ({ onSubmit }) => {
   const handleFile = (file) => {
     if (!file) return;
 
+    console.log(file);
+
     if (!file.type.startsWith("image/")) {
       alert("Please upload an image file.");
       return;
