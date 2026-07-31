@@ -8,11 +8,13 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
+      // Background Template
       const TEMPLATE_URL = "/template.png";
 
-      const PHOTO_X = 435;
-      const PHOTO_Y = 675;
-      const PROFILE_SIZE = 290;
+      // Photo Position (Adjust if needed)
+      const PHOTO_X = 430;
+      const PHOTO_Y = 655;
+      const PROFILE_SIZE = 300;
 
       const imgTemplate = new Image();
       const imgUser = new Image();
@@ -21,28 +23,19 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
         canvas.width = imgTemplate.width;
         canvas.height = imgTemplate.height;
 
+        // Draw Template
         ctx.drawImage(imgTemplate, 0, 0);
 
         const reader = new FileReader();
 
         reader.onload = (event) => {
           imgUser.onload = () => {
-            const aspect = imgUser.width / imgUser.height;
 
-            let drawWidth;
-            let drawHeight;
-            let offsetX = 0;
-            let offsetY = 0;
+            // -------- Crop Image Perfectly --------
+            const sourceSize = Math.min(imgUser.width, imgUser.height);
 
-            if (aspect > 1) {
-              drawHeight = PROFILE_SIZE;
-              drawWidth = PROFILE_SIZE * aspect;
-              offsetX = -(drawWidth - PROFILE_SIZE) / 2;
-            } else {
-              drawWidth = PROFILE_SIZE;
-              drawHeight = PROFILE_SIZE / aspect;
-              offsetY = -(drawHeight - PROFILE_SIZE) / 2;
-            }
+            const sx = (imgUser.width - sourceSize) / 2;
+            const sy = (imgUser.height - sourceSize) / 2;
 
             ctx.save();
 
@@ -53,35 +46,52 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
               PHOTO_Y,
               PROFILE_SIZE,
               PROFILE_SIZE,
-              35
+              25
             );
 
             ctx.clip();
 
             ctx.drawImage(
               imgUser,
-              PHOTO_X + offsetX,
-              PHOTO_Y + offsetY,
-              drawWidth,
-              drawHeight
+              sx,
+              sy,
+              sourceSize,
+              sourceSize,
+              PHOTO_X,
+              PHOTO_Y,
+              PROFILE_SIZE,
+              PROFILE_SIZE
             );
 
             ctx.restore();
 
+            // -------- Name & Role --------
+
             const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
-            const NAME_Y = PHOTO_Y + PROFILE_SIZE + 20;
-            const ROLE_Y = NAME_Y + 55;
+
+            // Leave more space under image
+            const NAME_Y = PHOTO_Y + PROFILE_SIZE + 35;
+
+            const ROLE_Y = NAME_Y + 45;
 
             ctx.textAlign = "center";
             ctx.textBaseline = "top";
 
-            ctx.fillStyle = "#000";
-            ctx.font = "bold 28px Arial";
+            // Name
+            ctx.fillStyle = "#1A1A1A";
+            ctx.font = "bold 34px Poppins";
+
             ctx.fillText(name, CENTER_X, NAME_Y);
 
-            if (role) {
-              ctx.font = "bold 24px Arial";
+            // Role
+            if (role && role.trim() !== "") {
+
+              ctx.fillStyle = "#444";
+
+              ctx.font = "26px Poppins";
+
               ctx.fillText(role, CENTER_X, ROLE_Y);
+
             }
 
             resolve(canvas.toDataURL("image/png"));
@@ -95,14 +105,14 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
         };
 
         reader.onerror = () => {
-          reject(new Error("Failed to read uploaded image."));
+          reject(new Error("Unable to read uploaded image."));
         };
 
         reader.readAsDataURL(photoFile);
       };
 
       imgTemplate.onerror = () => {
-        reject(new Error("Template image not found: " + TEMPLATE_URL));
+        reject(new Error("Template image not found."));
       };
 
       imgTemplate.src = TEMPLATE_URL;
