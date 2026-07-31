@@ -14,9 +14,9 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       // -------------------------
       // PHOTO AREA
       // -------------------------
-      const PHOTO_X = 385;
-      const PHOTO_Y = 435;
-      const PROFILE_SIZE = 305;
+      const PHOTO_X = 405;
+      const PHOTO_Y = 495;
+      const PROFILE_SIZE = 410;
       const CORNER_RADIUS = 28;
 
       // -------------------------
