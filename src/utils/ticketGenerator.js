@@ -8,15 +8,23 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      // Template
+      // Template Image
       const TEMPLATE_URL = "/template.png";
 
-      // ===========================
-      // PHOTO POSITION
-      // ===========================
+      // ==========================
+      // PHOTO SETTINGS
+      // ==========================
       const PHOTO_X = 355;
       const PHOTO_Y = 455;
       const PROFILE_SIZE = 520;
+      const CORNER_RADIUS = 40;
+
+      // ==========================
+      // NAME & ROLE POSITION
+      // ==========================
+      const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
+      const NAME_Y = PHOTO_Y + PROFILE_SIZE + 40;
+      const ROLE_Y = NAME_Y + 55;
 
       const imgTemplate = new Image();
       const imgUser = new Image();
@@ -25,7 +33,7 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
         canvas.width = imgTemplate.width;
         canvas.height = imgTemplate.height;
 
-        // Draw Template
+        // Draw template
         ctx.drawImage(imgTemplate, 0, 0);
 
         const reader = new FileReader();
@@ -33,12 +41,12 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
         reader.onload = (event) => {
           imgUser.onload = () => {
 
-            // ===========================
-            // DRAW PHOTO
-            // ===========================
+            // ==========================
+            // Draw User Photo
+            // ==========================
 
-           ctx.save();
-            
+            ctx.save();
+
             ctx.beginPath();
             ctx.roundRect(
               PHOTO_X,
@@ -46,34 +54,34 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
               PROFILE_SIZE,
               PROFILE_SIZE,
               CORNER_RADIUS
-            )
-           ctx.clip();
+            );
+            ctx.clip();
+
             // Cover image perfectly
             const scale = Math.max(
               PROFILE_SIZE / imgUser.width,
               PROFILE_SIZE / imgUser.height
             );
-            
+
             const scaledWidth = imgUser.width * scale;
             const scaledHeight = imgUser.height * scale;
-            
+
             const dx = PHOTO_X + (PROFILE_SIZE - scaledWidth) / 2;
             const dy = PHOTO_Y + (PROFILE_SIZE - scaledHeight) / 2;
-          ctx.drawImage(
-            imgUser,
-            dx,
-            dy,
-            scaledWidth,
-            scaledHeight
-          );
 
-          ctx.restore();
+            ctx.drawImage(
+              imgUser,
+              dx,
+              dy,
+              scaledWidth,
+              scaledHeight
+            );
 
-            // ===========================
-            // DRAW NAME
-            // ===========================
+            ctx.restore();
 
-            const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
+            // ==========================
+            // Draw Name
+            // ==========================
 
             ctx.textAlign = "center";
             ctx.textBaseline = "top";
@@ -82,15 +90,14 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
             ctx.font = "bold 42px Arial";
             ctx.fillText(name.trim(), CENTER_X, NAME_Y);
 
-            // ===========================
-            // DRAW ROLE
-            // ===========================
+            // ==========================
+            // Draw Role
+            // ==========================
 
             if (role && role.trim() !== "") {
               ctx.fillStyle = "#555555";
               ctx.font = "30px Arial";
-
-                ctx.fillText(role.trim(), CENTER_X, ROLE_Y);
+              ctx.fillText(role.trim(), CENTER_X, ROLE_Y);
             }
 
             resolve(canvas.toDataURL("image/png"));
@@ -107,12 +114,12 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
           reject(new Error("Unable to read uploaded image."));
         };
 
-        if(!(photoFile instanceof File)) {
-          reject(new Error("Invalifd image file."));
+        if (!(photoFile instanceof File)) {
+          reject(new Error("Invalid image file."));
           return;
         }
 
-        console.log("Photo File:",photoFile);
+        console.log("Photo File:", photoFile);
         reader.readAsDataURL(photoFile);
       };
 
