@@ -10,10 +10,13 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const handleGenerateTicket = async (data) => {
-    const {name, role, photo } = data;
-    
-    console.log(photo);
-    
+    const { name, role, photo } = data;
+
+    console.log("Photo:", photo);
+
+    setLoading(true);
+
+    try {
       const url = await generateTicketCanvas(name, role, photo);
       setTicketUrl(url);
     } catch (error) {
@@ -55,7 +58,7 @@ function App() {
           style={{
             fontSize: "24px",
             fontWeight: "700",
-            color: "#fff",
+            color: "#ffffff",
             textAlign: "center",
             margin: "5px 0",
           }}
