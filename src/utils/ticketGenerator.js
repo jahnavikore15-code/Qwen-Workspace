@@ -14,16 +14,9 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       // ===========================
       // PHOTO POSITION
       // ===========================
-      const PHOTO_X = 430;
-      const PHOTO_Y = 610;
-      const PROFILE_SIZE = 360;
-      const CORNER_RADIUS = 35;
-
-      // ===========================
-      // TEXT POSITION
-      // ===========================
-      const NAME_Y = 1035;
-      const ROLE_Y = 1085;
+      const PHOTO_X = 355;
+      const PHOTO_Y = 455;
+      const PROFILE_SIZE = 520;
 
       const imgTemplate = new Image();
       const imgUser = new Image();
@@ -44,8 +37,8 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
             // DRAW PHOTO
             // ===========================
 
-            ctx.save();
-
+           ctx.save();
+            
             ctx.beginPath();
             ctx.roundRect(
               PHOTO_X,
@@ -53,34 +46,28 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
               PROFILE_SIZE,
               PROFILE_SIZE,
               CORNER_RADIUS
-            );
-
-            ctx.clip();
-
-            // Cover Algorithm (Fits image perfectly)
+            )
+           ctx.clip();
+            // Cover image perfectly
             const scale = Math.max(
               PROFILE_SIZE / imgUser.width,
               PROFILE_SIZE / imgUser.height
             );
+            
+            const scaledWidth = imgUser.width * scale;
+            const scaledHeight = imgUser.height * scale;
+            
+            const dx = PHOTO_X + (PROFILE_SIZE - scaledWidth) / 2;
+            const dy = PHOTO_Y + (PROFILE_SIZE - scaledHeight) / 2;
+          ctx.drawImage(
+            imgUser,
+            dx,
+            dy,
+            scaledWidth,
+            scaledHeight
+          );
 
-            const drawWidth = imgUser.width * scale;
-            const drawHeight = imgUser.height * scale;
-
-            const drawX =
-              PHOTO_X + (PROFILE_SIZE - drawWidth) / 2;
-
-            const drawY =
-              PHOTO_Y + (PROFILE_SIZE - drawHeight) / 2;
-
-            ctx.drawImage(
-              imgUser,
-              drawX,
-              drawY,
-              drawWidth,
-              drawHeight
-            );
-
-            ctx.restore();
+          ctx.restore();
 
             // ===========================
             // DRAW NAME
@@ -89,16 +76,11 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
             const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
 
             ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
+            ctx.textBaseline = "top";
 
             ctx.fillStyle = "#111111";
-            ctx.font = "bold 38px Arial";
-
-            ctx.fillText(
-              name.trim(),
-              CENTER_X,
-              NAME_Y
-            );
+            ctx.font = "bold 42px Arial";
+            ctx.fillText(name.trim(), CENTER_X, NAME_Y);
 
             // ===========================
             // DRAW ROLE
@@ -106,13 +88,9 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
 
             if (role && role.trim() !== "") {
               ctx.fillStyle = "#555555";
-              ctx.font = "28px Arial";
+              ctx.font = "30px Arial";
 
-              ctx.fillText(
-                role.trim(),
-                CENTER_X,
-                ROLE_Y
-              );
+                ctx.fillText(role.trim(), CENTER_X, ROLE_Y);
             }
 
             resolve(canvas.toDataURL("image/png"));
