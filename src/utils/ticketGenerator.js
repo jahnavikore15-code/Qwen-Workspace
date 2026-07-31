@@ -11,13 +11,17 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       // Template
       const TEMPLATE_URL = "/template.png";
 
-      // ===== Adjust these if your template changes =====
+      // ===========================
+      // PHOTO POSITION
+      // ===========================
       const PHOTO_X = 430;
       const PHOTO_Y = 610;
       const PROFILE_SIZE = 360;
       const CORNER_RADIUS = 35;
 
-      // Text Position
+      // ===========================
+      // TEXT POSITION
+      // ===========================
       const NAME_Y = 1035;
       const ROLE_Y = 1085;
 
@@ -28,7 +32,7 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
         canvas.width = imgTemplate.width;
         canvas.height = imgTemplate.height;
 
-        // Draw template
+        // Draw Template
         ctx.drawImage(imgTemplate, 0, 0);
 
         const reader = new FileReader();
@@ -36,9 +40,9 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
         reader.onload = (event) => {
           imgUser.onload = () => {
 
-            // =============================
-            // Draw Photo (Perfect Fit)
-            // =============================
+            // ===========================
+            // DRAW PHOTO
+            // ===========================
 
             ctx.save();
 
@@ -53,7 +57,7 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
 
             ctx.clip();
 
-            // Cover Algorithm
+            // Cover Algorithm (Fits image perfectly)
             const scale = Math.max(
               PROFILE_SIZE / imgUser.width,
               PROFILE_SIZE / imgUser.height
@@ -78,9 +82,9 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
 
             ctx.restore();
 
-            // =============================
-            // Draw Name
-            // =============================
+            // ===========================
+            // DRAW NAME
+            // ===========================
 
             const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
 
@@ -89,16 +93,26 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
 
             ctx.fillStyle = "#111111";
             ctx.font = "bold 38px Arial";
-            ctx.fillText(name, CENTER_X, NAME_Y);
 
-            // =============================
-            // Draw Role
-            // =============================
+            ctx.fillText(
+              name.trim(),
+              CENTER_X,
+              NAME_Y
+            );
+
+            // ===========================
+            // DRAW ROLE
+            // ===========================
 
             if (role && role.trim() !== "") {
               ctx.fillStyle = "#555555";
               ctx.font = "28px Arial";
-              ctx.fillText(role, CENTER_X, ROLE_Y);
+
+              ctx.fillText(
+                role.trim(),
+                CENTER_X,
+                ROLE_Y
+              );
             }
 
             resolve(canvas.toDataURL("image/png"));
@@ -119,7 +133,7 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       };
 
       imgTemplate.onerror = () => {
-        reject(new Error("Template not found: " + TEMPLATE_URL));
+        reject(new Error("Template image not found: " + TEMPLATE_URL));
       };
 
       imgTemplate.src = TEMPLATE_URL;
