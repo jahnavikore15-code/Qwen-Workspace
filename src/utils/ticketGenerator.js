@@ -107,6 +107,12 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
           reject(new Error("Unable to read uploaded image."));
         };
 
+        if(!(photoFile instanceof File)) {
+          reject(new Error("Invalifd image file."));
+          return;
+        }
+
+        console.log("Photo File:",photoFile);
         reader.readAsDataURL(photoFile);
       };
 
