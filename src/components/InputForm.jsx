@@ -15,7 +15,7 @@ const InputForm = ({ onSubmit }) => {
   const handleDrop = (e) => {
     e.preventDefault();
 
-    if (e.dataTransfer.files.length > 0) {
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       handleFile(e.dataTransfer.files[0]);
     }
   };
@@ -23,21 +23,25 @@ const InputForm = ({ onSubmit }) => {
   const handleFile = (file) => {
     if (!file) return;
 
-    console.log(file);
-
+    // Allow only image files
     if (!file.type.startsWith("image/")) {
-      alert("Please upload an image file.");
+      alert("Please upload a valid image.");
       return;
     }
 
     setPhoto(file);
+
+    if (photoPreview) {
+      URL.revokeObjectURL(photoPreview);
+    }
+
     setPhotoPreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name.trim()) {
+    if (name.trim() === "") {
       alert("Please enter your name.");
       return;
     }
@@ -56,6 +60,7 @@ const InputForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {/* Upload */}
       <div className="form-group">
         <label>Upload Your Photo</label>
 
@@ -63,7 +68,7 @@ const InputForm = ({ onSubmit }) => {
           className="drop-zone"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          onClick={() => fileInputRef.current.click()}
+          onClick={() => fileInputRef.current?.click()}
         >
           {photoPreview ? (
             <img
@@ -75,20 +80,23 @@ const InputForm = ({ onSubmit }) => {
             <div style={{ textAlign: "center" }}>
               <img
                 src="/images/qwen-camera-bear.jpeg"
-                alt="Qwen Camera Bear"
+                alt="Upload"
                 className="drop-zone-bear"
               />
 
-              <p>✨ Drag & Drop your photo here</p>
+              <p style={{ marginTop: "12px" }}>
+                ✨ Drag & Drop your photo here
+              </p>
 
               <p
                 style={{
-                  fontSize: "0.85rem",
-                  opacity: 0.7,
+                  fontSize: "14px",
+                  opacity: 0.75,
+                  marginTop: "8px",
                 }}
               >
                 Click or drag an image to generate your
-                <strong> Qwen Workspace Attendee Pass</strong>.
+                <strong> Qwen Workspace Attendee Pass</strong>
               </p>
             </div>
           )}
@@ -96,13 +104,14 @@ const InputForm = ({ onSubmit }) => {
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept="image/png,image/jpeg,image/jpg,image/webp"
             hidden
-            onChange={(e) => handleFile(e.target.files[0])}
+            onChange={(e) => handleFile(e.target.files?.[0])}
           />
         </div>
       </div>
 
+      {/* Name */}
       <div className="form-group">
         <label>Name</label>
 
@@ -117,23 +126,25 @@ const InputForm = ({ onSubmit }) => {
         />
       </div>
 
+      {/* Role */}
       <div className="form-group">
         <label>Company / Designation (Optional)</label>
 
         <input
           className="form-input"
           type="text"
-          placeholder="e.g. Software Engineer at Qwen"
+          placeholder="e.g. AI/ML Engineer"
           value={role}
           maxLength={40}
           onChange={(e) => setRole(e.target.value)}
         />
       </div>
 
+      {/* Button */}
       <button
-        className="btn-primary"
         type="submit"
-        disabled={!name || !photo}
+        className="btn-primary"
+        disabled={!name.trim() || !photo}
       >
         Generate My Attendee Pass
       </button>
