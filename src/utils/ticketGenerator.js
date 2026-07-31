@@ -1,5 +1,5 @@
 /**
- * Ticket Generation Utility (Frontend Edition)
+ * Ticket Generation Utility
  */
 
 export const generateTicketCanvas = async (name, role, photoFile) => {
@@ -8,23 +8,23 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      // Template Image
+      // Template
       const TEMPLATE_URL = "/template.png";
 
-      // ==========================
-      // PHOTO SETTINGS
-      // ==========================
-      const PHOTO_X = 355;
-      const PHOTO_Y = 455;
-      const PROFILE_SIZE = 520;
-      const CORNER_RADIUS = 40;
+      // -------------------------
+      // PHOTO AREA
+      // -------------------------
+      const PHOTO_X = 395;
+      const PHOTO_Y = 485;
+      const PROFILE_SIZE = 430;
+      const CORNER_RADIUS = 28;
 
-      // ==========================
-      // NAME & ROLE POSITION
-      // ==========================
+      // -------------------------
+      // TEXT POSITION
+      // -------------------------
       const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
-      const NAME_Y = PHOTO_Y + PROFILE_SIZE + 40;
-      const ROLE_Y = NAME_Y + 55;
+      const NAME_Y = PHOTO_Y + PROFILE_SIZE + 55;
+      const ROLE_Y = NAME_Y + 60;
 
       const imgTemplate = new Image();
       const imgUser = new Image();
@@ -41,9 +41,9 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
         reader.onload = (event) => {
           imgUser.onload = () => {
 
-            // ==========================
-            // Draw User Photo
-            // ==========================
+            // -------------------------
+            // Draw Uploaded Photo
+            // -------------------------
 
             ctx.save();
 
@@ -55,49 +55,63 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
               PROFILE_SIZE,
               CORNER_RADIUS
             );
+
             ctx.clip();
 
-            // Cover image perfectly
+            // Fit image perfectly inside frame
             const scale = Math.max(
               PROFILE_SIZE / imgUser.width,
               PROFILE_SIZE / imgUser.height
             );
 
-            const scaledWidth = imgUser.width * scale;
-            const scaledHeight = imgUser.height * scale;
+            const drawWidth = imgUser.width * scale;
+            const drawHeight = imgUser.height * scale;
 
-            const dx = PHOTO_X + (PROFILE_SIZE - scaledWidth) / 2;
-            const dy = PHOTO_Y + (PROFILE_SIZE - scaledHeight) / 2;
+            const drawX =
+              PHOTO_X + (PROFILE_SIZE - drawWidth) / 2;
+
+            const drawY =
+              PHOTO_Y + (PROFILE_SIZE - drawHeight) / 2;
 
             ctx.drawImage(
               imgUser,
-              dx,
-              dy,
-              scaledWidth,
-              scaledHeight
+              drawX,
+              drawY,
+              drawWidth,
+              drawHeight
             );
 
             ctx.restore();
 
-            // ==========================
+            // -------------------------
             // Draw Name
-            // ==========================
+            // -------------------------
 
             ctx.textAlign = "center";
             ctx.textBaseline = "top";
 
             ctx.fillStyle = "#111111";
-            ctx.font = "bold 42px Arial";
-            ctx.fillText(name.trim(), CENTER_X, NAME_Y);
+            ctx.font = "bold 48px Arial";
 
-            // ==========================
+            ctx.fillText(
+              name.trim(),
+              CENTER_X,
+              NAME_Y
+            );
+
+            // -------------------------
             // Draw Role
-            // ==========================
+            // -------------------------
 
             if (role && role.trim() !== "") {
               ctx.fillStyle = "#555555";
-              ctx.font = "30px Arial";
-              ctx.fillText(role.trim(), CENTER_X, ROLE_Y);
+              ctx.font = "bold 34px Arial";
+
+              ctx.fillText(
+                role.trim(),
+                CENTER_X,
+                ROLE_Y
+              );
             }
 
             resolve(canvas.toDataURL("image/png"));
@@ -119,12 +133,11 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
           return;
         }
 
-        console.log("Photo File:", photoFile);
         reader.readAsDataURL(photoFile);
       };
 
       imgTemplate.onerror = () => {
-        reject(new Error("Template image not found: " + TEMPLATE_URL));
+        reject(new Error("Template image not found."));
       };
 
       imgTemplate.src = TEMPLATE_URL;
