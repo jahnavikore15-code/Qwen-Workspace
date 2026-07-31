@@ -10,15 +10,11 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const handleGenerateTicket = async (data) => {
-    console.log("Button clicked:", data);
-
-    setLoading(true);
-
-    try {
-      const { name, role, photo } = data;
-
+    const {name, role, photo } = data;
+    
+    console.log(photo);
+    
       const url = await generateTicketCanvas(name, role, photo);
-
       setTicketUrl(url);
     } catch (error) {
       console.error("Ticket Generation Error:", error);
