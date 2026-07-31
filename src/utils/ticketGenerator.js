@@ -23,8 +23,8 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       // TEXT POSITION
       // -------------------------
       const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
-      const NAME_Y = PHOTO_Y + PROFILE_SIZE + 55;
-      const ROLE_Y = NAME_Y + 60;
+      const NAME_Y = PHOTO_Y + PROFILE_SIZE + 40;
+      const ROLE_Y = NAME_Y + 55;
 
       const imgTemplate = new Image();
       const imgUser = new Image();
