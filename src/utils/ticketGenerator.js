@@ -91,7 +91,7 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
             ctx.textBaseline = "top";
 
             ctx.fillStyle = "#111111";
-            ctx.font = "bold 48px Arial";
+            ctx.font = "bold 42px Arial";
 
             ctx.fillText(
               name.trim(),
@@ -104,8 +104,8 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
             // -------------------------
 
             if (role && role.trim() !== "") {
-              ctx.fillStyle = "#555555";
-              ctx.font = "bold 34px Arial";
+              ctx.fillStyle = "#444444";
+              ctx.font = "bold 30px Arial";
 
               ctx.fillText(
                 role.trim(),
